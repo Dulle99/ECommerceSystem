@@ -120,3 +120,4 @@ C:\Users\Dules\OneDrive\Desktop\ECommerceSystem\src\ProductCatalogService\obj\De
 C:\Users\Dules\OneDrive\Desktop\ECommerceSystem\src\ProductCatalogService\obj\Debug\net9.0\ProductCatalogService.pdb
 C:\Users\Dules\OneDrive\Desktop\ECommerceSystem\src\ProductCatalogService\obj\Debug\net9.0\ProductCatalogService.genruntimeconfig.cache
 C:\Users\Dules\OneDrive\Desktop\ECommerceSystem\src\ProductCatalogService\obj\Debug\net9.0\ref\ProductCatalogService.dll
+C:\Users\Dules\OneDrive\Desktop\ECommerceSystem\src\ProductCatalogService\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
