@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProductCatalogService.Data;
+using ProductCatalogService.DTOs;
 using ProductCatalogService.Models;
 using ProductCatalogService.Services;
 
@@ -25,10 +26,34 @@ namespace ProductCatalogService.Controllers
         }
 
         [HttpGet]
-        public string Get()
+        [Route("GetProduct/{productId}")]
+        public async Task<IActionResult> GetProductById(int productId)
         {
-            return "Hello";
+            return new JsonResult(await this.productCatalogService.GetProductById(productId));
         }
 
+        [HttpGet]
+        [Route("GetAllProducts")]
+        public async Task<IActionResult> GetAllProducts()
+        {
+            return new JsonResult(await productCatalogService.GetAllProducts());
+        }
+
+        [HttpPut]
+        [Route("UpdateProduct/{productId}")]
+        public async Task<IActionResult> UpdateProduct([FromBody] ProductDTO productDTO, int productId)
+        {
+            return new JsonResult(await this.productCatalogService.UpdateProduct(productId, productDTO));
+        }
+
+        [HttpDelete]
+        [Route("RemoveProduct/{productId}")]
+        public async Task<IActionResult> RemoveProduct(int productId)
+        {
+            if (await this.productCatalogService.DeleteProduct(productId))
+                return Ok();
+
+            return BadRequest();
+        }
     }
 }

@@ -1,0 +1,57 @@
+services:
+  # PostgreSQL service
+  postgres:
+    image: postgres:15
+    container_name: postgres-db
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=ProductCatalogDb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - proba1
+
+  # PgAdmin service
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@pgadmin.org
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    ports:
+      - "8080:80"
+    depends_on:
+      - postgres
+    networks:
+      - proba1
+
+  # Product Catalog Service
+  productcatalogservice:
+    image: ${DOCKER_REGISTRY-}productcatalogservice
+    build:
+      context: ProductCatalogService
+      dockerfile: Dockerfile
+    container_name: product-catalog-service
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=ProductCatalogDb;Username=admin;Password=password
+    depends_on:
+      - postgres
+    ports:
+      - "5000:8080"
+    networks:
+      - proba1
+    #command: ["sh", "-c", "dotnet ProductCatalogService.dll --urls=http://0.0.0.0:80"]
+    #command: ["sh", "-c", "dotnet ef database update && dotnet ProductCatalogService.dll"]
+
+networks:
+  proba1:
+    driver: bridge
+
+volumes:
+  postgres-data:
+
+
